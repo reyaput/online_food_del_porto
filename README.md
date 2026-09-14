@@ -1,6 +1,6 @@
 # 🍔 Online Food Delivery Customer Churn Prediction System (OrderKu)
 
-[![Python](https://img.shields.io/badge/Python-3.13+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.30+-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
 [![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-1.3+-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
 [![Pandas](https://img.shields.io/badge/Pandas-2.0+-150458?style=for-the-badge&logo=pandas&logoColor=white)](https://pandas.pydata.org/)
@@ -23,9 +23,11 @@
 
 ## 📋 Project Overview
 
-Proyek ini bertujuan untuk membangun portofolio **Data Analysis & End-to-End Machine Learning** dalam industri *Online Food Delivery* (**OrderKu**). Sistem ini dirancang untuk memprediksi pelanggan yang berisiko berhenti memesan (*Churn* / `Output = No`) berdasarkan profil demografis, latar belakang ekonomi, dan umpan balik (*Feedback*) yang diberikan.
+Proyek ini bertujuan untuk membangun portofolio **Data Analysis & End-to-End Machine Learning** dalam industri *Online Food Delivery* (**OrderKu**). Sistem dirancang untuk memprediksi pelanggan yang berisiko berhenti memesan (*Churn* / `Output = No`) berdasarkan profil demografis, latar belakang ekonomi, dan umpan balik (*Feedback*) yang tersedia pada data.
 
-Dengan memadukan eksplorasi data mendalam (*EDA*), pencegahan kebocoran data (*data leakage prevention*), *threshold tuning* dengan batasan bisnis (*business constraint*), serta antarmuka interaktif berbasis **Streamlit**, tim operasional dan CRM dapat melakukan intervensi retensi secara cepat, terukur, dan efisien sebelum pelanggan beralih ke platform kompetitor.
+Dengan memadukan eksplorasi data (*EDA*), pencegahan potensi *data leakage*, *threshold tuning* dengan batasan bisnis (*business constraint*), serta antarmuka interaktif berbasis **Streamlit**, sistem dapat digunakan sebagai alat bantu prioritisasi retensi untuk tim operasional dan CRM.
+
+> **Catatan metodologi:** model ini digunakan sebagai **decision-support / prioritization tool**, bukan sebagai bukti bahwa suatu faktor merupakan penyebab (*causal driver*) churn.
 
 ---
 
@@ -33,18 +35,20 @@ Dengan memadukan eksplorasi data mendalam (*EDA*), pencegahan kebocoran data (*d
 
 ### Problem Statement
 
-Dalam industri pesan-antar makanan daring (*food delivery*), kompetisi sangat ketat dengan biaya akuisisi pelanggan (*Customer Acquisition Cost* / CAC) yang tinggi akibat perang promo dan diskon.
+Dalam industri pesan-antar makanan daring (*food delivery*), kompetisi sangat ketat dengan biaya akuisisi pelanggan (*Customer Acquisition Cost* / CAC) yang tinggi akibat persaingan promo dan diskon.
 
-- Dataset menunjukkan tingkat *Churn* sebesar **~22.4%** (hampir 1 dari 4 pelanggan berhenti memesan).
-- Mengakuisisi pelanggan baru membutuhkan biaya **5x hingga 7x lipat** dibandingkan mempertahankan pelanggan lama.
-- Pelanggan yang berhenti memesan menurunkan nilai transaksi bruto (*Gross Merchandise Value* / GMV) serta merugikan ekosistem merchant dan mitra pengemudi.
+- Dataset menunjukkan tingkat *churn* sebesar **~22.4%** (87 dari 388 pelanggan).
+- Pelanggan yang berhenti memesan berpotensi menurunkan nilai transaksi bruto (*Gross Merchandise Value* / GMV) serta memengaruhi ekosistem merchant dan mitra pengemudi.
+- Retensi pelanggan menjadi penting karena mempertahankan pelanggan yang sudah ada umumnya menjadi bagian penting dari strategi *customer lifecycle management*.
+
+> **Catatan:** Pernyataan mengenai biaya akuisisi pelanggan yang beberapa kali lebih tinggi daripada biaya retensi perlu didukung oleh referensi eksternal apabila digunakan dalam laporan akademik atau presentasi formal.
 
 ### Objectives
 
-1. **Identifikasi Faktor Risiko (Root Cause Analysis):** Mengungkap pola demografis, sosio-ekonomi, dan sinyal kepuasan yang mendorong pelanggan berhenti menggunakan layanan.
-2. **Pencegahan Data Leakage & Pemodelan Robust:** Merancang pipeline Machine Learning yang bebas dari kebocoran fitur dengan fokus evaluasi pada deteksi kelas minoritas (*Churn Recall & Churn Precision*).
-3. **Threshold Tuning dengan Batasan Bisnis:** Mengoptimalkan *decision threshold* dari probabilitas prediksi dengan syarat *Precision Churn* $\ge$ 40%, sehingga tim retensi tidak membuang anggaran promo ke pelanggan yang sebenarnya loyal.
-4. **Dashboard Operasional Interaktif:** Menyediakan aplikasi web (Streamlit) yang mendukung pengecekan risiko pelanggan satuan (*single prediction*) maupun pemrosesan massal (*batch CSV upload*) untuk kebutuhan tim CRM.
+1. **Identifikasi Faktor Risiko:** Mengidentifikasi pola demografis, sosio-ekonomi, dan *feedback* yang berasosiasi dengan status churn.
+2. **Pencegahan Data Leakage & Pemodelan Robust:** Merancang pipeline Machine Learning yang meminimalkan risiko kebocoran informasi dengan evaluasi yang berfokus pada kelas Churn.
+3. **Threshold Tuning dengan Batasan Bisnis:** Mengoptimalkan *decision threshold* dari skor/probabilitas model dengan syarat *Precision Churn* `≥ 40%`, sehingga tim retensi dapat memfokuskan intervensi pada customer yang lebih berisiko.
+4. **Dashboard Operasional Interaktif:** Menyediakan aplikasi web (Streamlit) yang mendukung pengecekan risiko pelanggan satuan (*single prediction*) maupun pemrosesan massal (*batch CSV upload*).
 
 ---
 
@@ -54,7 +58,7 @@ Proyek ini dibangun menggunakan bahasa pemrograman Python. Disarankan menggunaka
 
 ### 1. Prerequisite
 
-Pastikan Anda telah menginstal [Anaconda](https://www.anaconda.com/) / [Miniconda](https://docs.conda.io/en/latest/miniconda.html) atau Python 3.13.
+Pastikan Anda telah menginstal [Anaconda](https://www.anaconda.com/) / [Miniconda](https://docs.conda.io/en/latest/miniconda.html) dan menggunakan **Python 3.11**.
 
 ### 2. Setup Environment
 
@@ -95,27 +99,27 @@ Jalankan skrip ini jika ingin melatih ulang model, memvalidasi cross-validation,
 python train_model.py
 ```
 
-- **Proses yang dijalankan:**
-  1. Membaca dataset mentah (`data/raw/online_food_delivery_dataset.csv`).
-  2. Melakukan data cleaning & menyimpan data perantara (`data/interim/df_interim.csv` & `data/processed/df_model_ready.csv`).
-  3. Melakukan 5-Fold Stratified Cross-Validation pada Logistic Regression dan Random Forest.
-  4. Melakukan OOF (*Out-Of-Fold*) threshold tuning dengan constraint bisnis (*Precision Churn* $\ge$ 40%).
-  5. Menguji performa final pada Holdout Test Set (20%).
-  6. Menyimpan model pipeline (`best_model.pkl`), feature names (`feature_names.pkl`), dan rekam jejak eksperimen lengkap (`model_metadata.json`) ke folder `models/`.
+#### Proses yang dijalankan
+
+1. Membaca dataset mentah (`data/raw/online_food_delivery_dataset.csv`).
+2. Melakukan data cleaning & menyimpan data perantara (`data/interim/df_interim.csv` & `data/processed/df_model_ready.csv`).
+3. Melakukan **5-Fold Stratified Cross-Validation** pada Logistic Regression dan Random Forest.
+4. Menghasilkan **Out-Of-Fold (OOF)** prediction untuk threshold tuning dengan constraint bisnis (*Precision Churn* `≥ 40%`).
+5. Menguji performa final pada **Holdout Test Set (20%)**.
+6. Menyimpan model pipeline (`best_model.pkl`), feature names (`feature_names.pkl`), dan rekam jejak eksperimen (`model_metadata.json`) ke folder `models/`.
 
 ### B. Menjalankan Dashboard Prediksi (Streamlit App)
 
-Jalankan perintah ini untuk membuka antarmuka aplikasi prediksi berbasis web:
+Jalankan perintah berikut:
 
 ```bash
 streamlit run app.py
 ```
 
 - **Akses Aplikasi:** Browser akan terbuka secara otomatis di `http://localhost:8501`.
-- **Fitur Utama Aplikasi:**
-  - **🧍 Input Manual:** Masukkan parameter profil pelanggan satu per satu untuk mendapatkan skor loyalitas (%), probabilitas churn (%), dan label status retensi secara real-time.
-  - **📂 Upload CSV (Batch):** Unggah file CSV pelanggan secara massal, lengkapi dengan template unduhan, dan ekspor hasil prediksi beserta rekomendasi prioritas retensi.
-  - **📊 Penjelasan Model:** Visualisasi transparansi model mencakup metrik evaluasi CV & Test, threshold keputusan, serta grafik *Top 10 Feature Importance*.
+- **🧍 Input Manual:** Masukkan parameter profil pelanggan satu per satu untuk mendapatkan skor model, probabilitas churn, dan label status retensi secara real-time.
+- **📂 Upload CSV (Batch):** Unggah file CSV pelanggan secara massal, gunakan template unduhan, dan ekspor hasil prediksi beserta rekomendasi prioritas retensi.
+- **📊 Penjelasan Model:** Menampilkan metrik evaluasi CV & Test, threshold keputusan, serta grafik *Top 10 Feature Importance*.
 
 ---
 
@@ -135,11 +139,15 @@ Dataset yang digunakan mencakup data survei pelanggan layanan pesan-antar makana
 | **Educational Qualifications** | Tingkat pendidikan formal (`School`, `Graduate`, `Post Graduate`, `Ph.D`, `Uneducated`) | Kategorikal | Digunakan (Input) |
 | **Feedback** | Sentimen ulasan terakhir yang diberikan pelanggan (`Positive`, `Negative`) | Kategorikal | Digunakan (Input) |
 | **Output** | Status pemesanan kembali (`Yes` = Loyal/Stay, `No` = Churn) | Target | **Target Prediksi** |
-| **Family size** | Jumlah anggota keluarga | Numerik | *Excluded* (Penyebab data leakage terhadap customer profile) |
-| **Customer Type** | Tipe pelanggan | Kategorikal | *Excluded* (Beririsan langsung dengan definisi label) |
-| **latitude** | Koordinat lintang tempat tinggal | Numerik | *Excluded* (Tidak relevan untuk profil retensi umum) |
-| **longitude** | Koordinat bujur tempat tinggal | Numerik | *Excluded* (Tidak relevan untuk profil retensi umum) |
-| **Pin code** | Kode pos area pengiriman | Numerik | *Excluded* (Kardinalitas lokasi lokal) |
+| **Family size** | Jumlah anggota keluarga | Numerik | *Excluded* (tidak digunakan dalam model berdasarkan keputusan analisis) |
+| **Customer Type** | Tipe pelanggan | Kategorikal | *Excluded* (beririsan dengan informasi status target) |
+| **latitude** | Koordinat lintang tempat tinggal | Numerik | *Excluded* (tidak digunakan karena pertimbangan relevansi model) |
+| **longitude** | Koordinat bujur tempat tinggal | Numerik | *Excluded* (tidak digunakan karena pertimbangan relevansi model) |
+| **Pin code** | Kode pos area pengiriman | Numerik | *Excluded* (kardinalitas lokasi relatif tinggi) |
+
+> **Penting:** `Family size`, `latitude`, `longitude`, dan `Pin code` tidak sebaiknya disebut sebagai *data leakage* tanpa bukti bahwa fitur tersebut mengandung informasi yang berasal dari target atau outcome masa depan. Dalam project ini, fitur-fitur tersebut diperlakukan sebagai fitur yang dikeluarkan berdasarkan keputusan analisis/relevansi.
+
+> **Pengecekan temporal:** `Feedback` digunakan sebagai fitur prediktor. Agar penggunaan fitur ini valid untuk prediksi churn, `Feedback` harus tersedia pada titik waktu yang sama atau sebelum waktu prediksi. Karena dataset yang digunakan berbasis survei, hubungan temporal tersebut perlu diperhatikan ketika menggeneralisasikan model ke data produksi.
 
 ---
 
@@ -150,24 +158,27 @@ Berdasarkan analisis eksplorasi data terhadap 388 pelanggan, berikut adalah temu
 ### 1. Tingkat Retensi & Churn Keseluruhan
 
 - **Distribusi Target:** Sebanyak **77.6% (301 pelanggan)** berstatus Loyal (`Output = Yes`), sedangkan **22.4% (87 pelanggan)** berstatus Churn (`Output = No`).
-- Meskipun kelas mayoritas adalah pelanggan setia, tingkat churn sebesar 22.4% menunjukkan bahwa lebih dari 1 dari 5 pelanggan berhenti menggunakan layanan.
+- Tingkat churn sebesar 22.4% menunjukkan bahwa lebih dari 1 dari 5 pelanggan dalam dataset termasuk kelas Churn.
 
 ### 2. Sinyal Ulasan (Feedback) Adalah Indikator Terkuat
 
-- Pelanggan yang memberikan **Feedback "Negative"** memiliki tingkat Churn fantastis sebesar **74.6%**.
-- Sebaliknya, pelanggan dengan **Feedback "Positive"** mencatat tingkat retensi/loyalitas sebesar **89.3%** (tingkat churn hanya 10.7%).
-- *Insight:* Ulasan negatif bukan sekadar komplain, melainkan sinyal langsung bahwa pelanggan berada di ambang churn.
+- Pelanggan yang memberikan **Feedback "Negative"** memiliki tingkat Churn sebesar **74.6%**.
+- Sebaliknya, pelanggan dengan **Feedback "Positive"** mencatat tingkat retensi/loyalitas sebesar **89.3%** (tingkat churn 10.7%).
+- **Insight:** `Feedback` memiliki asosiasi yang kuat dengan status churn pada dataset ini dan dapat dipertimbangkan sebagai sinyal risiko retensi.
+
+> Hindari menyebut `Feedback` sebagai **penyebab langsung** churn karena analisis ini bersifat observasional dan tidak menguji hubungan sebab-akibat.
 
 ### 3. Dinamika Pekerjaan & Penghasilan Bulanan
 
-- **Mahasiswa & Tanpa Penghasilan Sangat Loyal:** Kelompok `Student` (tingkat loyalitas **88.9%**) dan `No Income` (loyalitas **87.7%**) merupakan segmen pengguna paling stabil, umumnya mengandalkan layanan untuk kepraktisan makan harian.
-- **Pekerja & Profesional Lebih Rentan Churn:** Kelompok `Employee` (churn **35.6%**) dan `Self Employeed` (churn **37.0%**), terutama pada rentang penghasilan `25001 to 50000` (churn **39.1%**), memiliki tingkat churn tertinggi.
-- *Insight:* Kelompok berpenghasilan memiliki ekspektasi layanan lebih tinggi (kecepatan antar, kualitas kemasan) serta sensitif terhadap pengalaman yang mengecewakan.
+- **Mahasiswa & Tanpa Penghasilan:** Kelompok `Student` memiliki tingkat loyalitas **88.9%**, sedangkan kelompok `No Income` memiliki loyalitas **87.7%**.
+- **Pekerja & Profesional:** Kelompok `Employee` memiliki churn **35.6%** dan `Self Employeed` **37.0%**. Rentang penghasilan `25001 to 50000` memiliki churn **39.1%**.
+- **Insight:** Terdapat perbedaan tingkat churn antar kelompok pekerjaan dan rentang pendapatan. Namun, temuan ini menunjukkan **asosiasi**, bukan bukti bahwa pekerjaan atau pendapatan menyebabkan churn.
 
 ### 4. Pengaruh Status Pernikahan & Usia
 
-- **Status Pernikahan:** Pelanggan yang berstatus `Married` memiliki churn rate sebesar **38.9%**, jauh lebih tinggi dibandingkan pelanggan `Single` yang hanya mencatat churn rate **14.6%**.
-- **Usia:** Pelanggan yang Churn memiliki rata-rata usia yang sedikit lebih tua (**26.0 tahun**) dibandingkan pelanggan Loyal (**24.2 tahun**). Pelanggan berkeluarga cenderung beralih memasak di rumah jika layanan pesan-antar tidak memenuhi standar higienis atau ketepatan waktu.
+- **Status Pernikahan:** Customer berstatus `Married` memiliki churn rate **38.9%**, sedangkan customer `Single` memiliki churn rate **14.6%**.
+- **Usia:** Customer Churn memiliki rata-rata usia sedikit lebih tua (**26.0 tahun**) dibandingkan customer Loyal (**24.2 tahun**).
+- **Insight:** Dataset menunjukkan adanya perbedaan pola retensi berdasarkan status pernikahan dan usia, tetapi tidak dapat digunakan untuk menyimpulkan penyebab perilaku tersebut.
 
 ---
 
@@ -194,46 +205,50 @@ Preprocessing berada di dalam pipeline sehingga proses transformasi tetap konsis
 
 ### 2. Algoritma yang Dibandingkan
 
-Dua algoritma dibandingkan menggunakan **5-Fold Stratified Cross-Validation**:
+Dua algoritma dibandingkan menggunakan **5-Fold Stratified Cross-Validation (CV)**:
 
 - Logistic Regression
 - Random Forest Classifier
 
-Hasil CV terbaru:
+**Hasil CV:**
 
-| Model | CV Recall Churn | CV Precision Churn | CV F1 Churn | CV ROC-AUC |
+| Model | Churn Recall | Churn Precision | Churn F1 | ROC-AUC |
 |---|---:|---:|---:|---:|
 | **Random Forest** | **70.0% ± 8.3%** | 56.6% ± 21.8% | **59.5% ± 6.8%** | **0.839 ± 0.057** |
 | Logistic Regression | 64.3% ± 6.4% | **57.3% ± 16.0%** | 59.1% ± 6.1% | 0.824 ± 0.053 |
 
-**Random Forest dipilih sebagai model final** karena memiliki CV Recall Churn, CV F1 Churn, dan CV ROC-AUC yang sedikit lebih tinggi.
+Random Forest dipilih sebagai model final karena memiliki **CV Churn Recall, CV Churn F1, dan CV ROC-AUC** yang sedikit lebih tinggi dibandingkan Logistic Regression.
+
+> **Catatan:** Perbedaan performa CV cukup tipis, sehingga pemilihan Random Forest sebaiknya dipahami sebagai keputusan berdasarkan keseluruhan hasil evaluasi dan tujuan bisnis, bukan karena perbedaannya sangat besar.
 
 ### 3. OOF Threshold Tuning dengan Business Constraint
 
-Selain threshold default 0.50, project ini melakukan **Out-of-Fold (OOF) threshold tuning** pada training set.
+Selain threshold default `0.50`, project ini melakukan **Out-of-Fold (OOF) threshold tuning** pada training set.
 
-Constraint bisnis:
+#### Constraint bisnis
 
 ```text
 Precision Churn >= 40%
 ```
 
-Tujuannya adalah mencegah threshold terlalu rendah sehingga terlalu banyak customer loyal salah ditandai sebagai churn.
+Tujuannya adalah mencegah threshold terlalu rendah sehingga terlalu banyak customer Loyal salah ditandai sebagai Churn.
 
-Hasil tuning OOF:
+**Hasil tuning OOF:**
 
 | Model | Threshold | Recall Churn | Precision Churn | F1 Churn | Accuracy |
 |---|---:|---:|---:|---:|---:|
 | Logistic Regression | 0.63 | 61.4% | **67.2%** | **64.2%** | **84.5%** |
 | **Random Forest** | **0.56** | **65.7%** | 61.3% | 63.4% | 82.9% |
 
-Threshold final untuk Random Forest adalah:
+Threshold final untuk Random Forest:
 
 ```text
 0.56 (56%)
 ```
 
-Threshold dipilih menggunakan training-set OOF prediction. **Holdout test set tidak digunakan untuk memilih threshold.**
+Threshold dipilih menggunakan **training-set OOF prediction**. **Holdout test set tidak digunakan untuk memilih threshold.**
+
+> **Interpretasi threshold:** `0.56` adalah batas keputusan model untuk mengategorikan customer sebagai prioritas Churn. Nilai ini sebaiknya disebut sebagai **model score/probability threshold**, bukan sebagai kepastian bahwa customer memiliki peluang churn tepat 56%.
 
 ### 4. Final Holdout Test Set
 
@@ -244,20 +259,38 @@ Train = 310 customer
 Test  = 78 customer
 ```
 
-Test set tetap disimpan sebagai data yang tidak digunakan dalam pemilihan model maupun threshold.
+Test set disimpan sebagai data yang tidak digunakan dalam pemilihan model maupun threshold.
 
-Dengan **Random Forest + threshold Churn 0.56**, hasil test:
+Dengan **Random Forest + threshold Churn 0.56**, hasil pada holdout test set:
 
 | Metrik Evaluasi | Nilai | Interpretasi |
 |---|---:|---|
 | **Accuracy** | **84.6%** | Proporsi prediksi benar pada keseluruhan test set. |
-| **Churn Recall** | **76.5%** | Berhasil mendeteksi **13 dari 17** customer yang sebenarnya churn. |
-| **Churn Precision** | **61.9%** | Sekitar 62% customer yang ditandai churn benar-benar churn. |
+| **Churn Recall** | **76.5%** | Berhasil mendeteksi **13 dari 17** customer yang sebenarnya Churn. |
+| **Churn Precision** | **61.9%** | Sekitar 62% customer yang ditandai Churn memang merupakan Churn. |
 | **Churn F1-Score** | **68.4%** | Keseimbangan precision dan recall untuk kelas Churn. |
-| **Recall Loyal** | **86.9%** | Sebagian besar customer Loyal tetap dikenali sebagai Loyal. |
+| **Recall Loyal** | **86.9%** | Sebagian besar customer Loyal berhasil dikenali sebagai Loyal. |
 | **Loyal F1-Score** | **89.8%** | Performa klasifikasi kelas Loyal. |
-| **ROC-AUC** | **0.834** | Kemampuan model membedakan Loyal dan Churn berdasarkan ranking probabilitas. |
+| **ROC-AUC** | **0.834** | Kemampuan model membedakan kelas berdasarkan ranking skor/probabilitas. |
 | **Average Precision (Churn)** | **0.722** | Ringkasan performa precision-recall untuk kelas Churn. |
+
+### ⭐ Angka Utama Model untuk Presentasi
+
+Untuk slide PowerPoint, tiga metrik utama yang paling relevan dengan tujuan bisnis project ini adalah:
+
+| Metrik | Hasil |
+|---|---:|
+| **Churn Recall** | **76.5%** |
+| **Churn F1-Score** | **68.4%** |
+| **ROC-AUC** | **0.834** |
+
+**Ringkasan yang disarankan untuk PPT:**
+
+> **Random Forest — Holdout Test Set (n=78)**  
+> **76.5% Churn Recall · 68.4% Churn F1 · 0.834 ROC-AUC**  
+> *Threshold = 0.56*
+
+Churn Recall ditempatkan sebagai metrik utama karena tujuan model adalah menangkap sebanyak mungkin customer yang berisiko Churn untuk masuk daftar prioritas retensi.
 
 ### 5. Confusion Matrix
 
@@ -277,13 +310,13 @@ Interpretasi:
 
 ### 6. Interpretasi Bisnis
 
-Hasil model menunjukkan trade-off yang cukup seimbang.
+Hasil model menunjukkan trade-off yang cukup seimbang pada holdout test set.
 
-**Recall Churn 76.5%** berarti sebagian besar customer yang benar-benar churn berhasil masuk ke daftar prioritas retensi.
+**Churn Recall 76.5%** berarti sebagian besar customer yang benar-benar Churn berhasil masuk ke daftar prioritas retensi.
 
-**Precision Churn 61.9%** berarti model tidak sekadar menandai hampir semua customer sebagai churn; mayoritas customer yang ditandai memang berasal dari kelas Churn.
+**Churn Precision 61.9%** berarti mayoritas customer yang ditandai sebagai Churn memang berasal dari kelas Churn, sehingga model tidak sekadar menandai hampir semua customer sebagai berisiko.
 
-Dengan demikian, model lebih cocok digunakan sebagai **decision-support / prioritization tool** untuk tim CRM, bukan sebagai keputusan otomatis bahwa seorang customer pasti churn.
+Dengan demikian, model lebih cocok digunakan sebagai **decision-support / prioritization tool** untuk tim CRM, bukan sebagai keputusan otomatis bahwa seorang customer pasti akan Churn.
 
 ---
 
@@ -291,21 +324,23 @@ Dengan demikian, model lebih cocok digunakan sebagai **decision-support / priori
 
 ### 1. Gunakan Model sebagai Prioritas Retensi
 
-Gunakan probabilitas churn untuk membuat daftar prioritas pelanggan yang perlu ditinjau oleh tim CRM.
+Gunakan skor churn dari model untuk membuat daftar prioritas pelanggan yang perlu ditinjau oleh tim CRM.
 
-Dengan threshold **56%**, customer dengan probabilitas churn minimal 56% masuk kelompok prioritas retensi.
+Dengan threshold **0.56**, customer dengan **model score/probability Churn ≥ 0.56** masuk kelompok prioritas retensi.
 
 ### 2. Hindari Pendekatan “Spray and Pray”
 
 Model membantu membatasi intervensi agar tidak diberikan secara merata kepada seluruh customer.
 
-Tujuannya adalah mengarahkan anggaran retensi kepada customer yang memiliki risiko churn lebih tinggi.
+Tujuannya adalah mengarahkan anggaran retensi kepada customer yang memiliki risiko Churn lebih tinggi.
 
 ### 3. Gunakan Feedback sebagai Sinyal Operasional
 
 `Feedback` merupakan salah satu fitur model. Feedback dapat digunakan sebagai konteks tambahan ketika tim CRM menentukan jenis tindak lanjut yang sesuai.
 
 Contohnya, customer dengan pengalaman negatif dapat diarahkan ke proses recovery atau penanganan keluhan.
+
+> Penggunaan `Feedback` untuk prediksi produksi perlu memperhatikan apakah informasi tersebut sudah tersedia sebelum waktu intervensi retensi dilakukan.
 
 ### 4. Validasi dengan Data Produksi
 
@@ -318,23 +353,44 @@ Sebelum digunakan untuk otomatisasi kampanye, model sebaiknya divalidasi menggun
 - histori penggunaan promo,
 - histori komplain.
 
-Data transaksi tersebut dapat membantu meningkatkan kemampuan model dalam menggambarkan perilaku customer secara aktual.
+Data transaksi tersebut dapat membantu model menggambarkan perilaku customer secara lebih aktual dibandingkan data survey saja.
 
 ---
 
 ## ⚠️ Limitations
 
-1. **Dataset kecil**
+1. **Dataset kecil**  
    Dataset terdiri dari 388 observasi dan test set 78 observasi. Metric pada satu split dapat berubah apabila pembagian data berubah.
 
-2. **Data survey**
-   Dataset berbasis survey, bukan data transaksi produksi. Model menunjukkan kemampuan prediksi pada dataset ini dan belum membuktikan hubungan sebab-akibat.
+2. **Data survey**  
+   Dataset berbasis survey, bukan data transaksi produksi. Model menunjukkan kemampuan prediksi pada dataset ini dan **belum membuktikan hubungan sebab-akibat**.
 
-3. **Feedback diperlukan**
-   Model memakai `Feedback` sebagai salah satu fitur sehingga penggunaannya terbatas pada customer yang memiliki feedback.
+3. **Ketersediaan Feedback**  
+   Model memakai `Feedback` sebagai salah satu fitur. Penggunaan fitur ini terbatas pada kondisi ketika feedback memang tersedia sebelum waktu prediksi/intervensi.
 
-4. **Threshold bukan kepastian churn**
-   Threshold 56% adalah batas keputusan model untuk prioritas retensi, bukan berarti customer pasti akan churn.
+4. **Threshold bukan kepastian Churn**  
+   Threshold `0.56` adalah batas keputusan model untuk prioritas retensi, bukan berarti customer pasti akan Churn.
 
-5. **Duplicate rows**
-   Sebanyak 103 duplicate rows terdeteksi dan tidak di-drop sesuai keputusan analisis dataset. Pada data produksi dengan customer ID unik, pemeriksaan duplicate sebaiknya dilakukan kembali.
+5. **Duplicate rows**  
+   Sebanyak **103 duplicate rows** terdeteksi dan tidak di-drop sesuai keputusan analisis dataset. Pada data produksi dengan customer ID unik, pemeriksaan duplicate sebaiknya dilakukan kembali.
+
+6. **Generalisasi ke data produksi**  
+   Hasil evaluasi berasal dari dataset survey dan belum membuktikan bahwa performa yang sama akan tercapai pada data transaksi produksi. Validasi eksternal dan monitoring model tetap diperlukan sebelum deployment produksi.
+
+---
+
+## 📌 Final Takeaway
+
+Project ini menunjukkan penerapan alur **end-to-end Machine Learning** untuk kebutuhan customer retention, mulai dari:
+
+**Data Understanding → EDA → Feature Selection → Preprocessing → Cross-Validation → OOF Threshold Tuning → Holdout Testing → Streamlit Deployment**
+
+Model final yang digunakan adalah **Random Forest** dengan **threshold 0.56**.
+
+Pada holdout test set, model menghasilkan:
+
+- **Churn Recall: 76.5%**
+- **Churn F1-Score: 68.4%**
+- **ROC-AUC: 0.834**
+
+Model sebaiknya diposisikan sebagai alat **prioritisasi retensi dan decision support**, bukan sebagai sistem yang menyatakan bahwa seorang customer pasti akan Churn.
