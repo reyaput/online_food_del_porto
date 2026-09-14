@@ -1,43 +1,4 @@
-"""
-train_model.py
-Pipeline training untuk model prediksi Loyal vs Churn — OrderKu.
 
-Target:
-    Output = Yes -> Loyal (Target=1)
-    Output = No  -> Churn (Target=0)
-
-Tujuan bisnis:
-    Mengidentifikasi customer yang berpotensi churn untuk retention campaign,
-    TANPA menandai terlalu banyak customer loyal sebagai churn.
-
-Perbaikan:
-- Churn dievaluasi secara eksplisit sebagai positive class (pos_label=0).
-- Preprocessing one-hot dilakukan di Pipeline untuk menghindari leakage.
-- Logistic Regression vs Random Forest.
-- 5-fold cross-validation.
-- Threshold tuning dilakukan dari OOF prediction pada training set.
-- Threshold dibatasi dengan business constraint:
-      Precision Churn >= 0.40
-  agar model tidak memilih threshold ekstrem yang menandai hampir semua
-  customer sebagai churn.
-- Pemilihan threshold:
-      1) Precision Churn >= MIN_CHURN_PRECISION
-      2) F1 Churn tertinggi
-      3) Recall Churn tertinggi
-      4) Accuracy tertinggi
-- Pemilihan model:
-      1) CV Recall Churn
-      2) CV F1 Churn
-      3) CV ROC-AUC
-- Test set tetap holdout dan TIDAK digunakan untuk memilih model/threshold.
-
-Fitur yang sengaja di-exclude:
-- Family size
-- Customer Type
-- Pin code
-- latitude
-- longitude
-"""
 
 import json
 from datetime import datetime
