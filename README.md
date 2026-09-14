@@ -41,8 +41,6 @@ Dalam industri pesan-antar makanan daring (*food delivery*), kompetisi sangat ke
 - Pelanggan yang berhenti memesan berpotensi menurunkan nilai transaksi bruto (*Gross Merchandise Value* / GMV) serta memengaruhi ekosistem merchant dan mitra pengemudi.
 - Retensi pelanggan menjadi penting karena mempertahankan pelanggan yang sudah ada umumnya menjadi bagian penting dari strategi *customer lifecycle management*.
 
-> **Catatan:** Pernyataan mengenai biaya akuisisi pelanggan yang beberapa kali lebih tinggi daripada biaya retensi perlu didukung oleh referensi eksternal apabila digunakan dalam laporan akademik atau presentasi formal.
-
 ### Objectives
 
 1. **Identifikasi Faktor Risiko:** Mengidentifikasi pola demografis, sosio-ekonomi, dan *feedback* yang berasosiasi dengan status churn.
@@ -125,7 +123,7 @@ streamlit run app.py
 
 ## 📊 Data Understanding
 
-Dataset yang digunakan mencakup data survei pelanggan layanan pesan-antar makanan daring dengan **388 baris** dan **14 fitur**.
+Dataset yang digunakan mencakup data survei pelanggan layanan pesan-antar makanan daring dengan **388 baris** dan **13 fitur**.
 
 ### Kamus Data (Feature Dictionary)
 
@@ -144,8 +142,6 @@ Dataset yang digunakan mencakup data survei pelanggan layanan pesan-antar makana
 | **latitude** | Koordinat lintang tempat tinggal | Numerik | *Excluded* (tidak digunakan karena pertimbangan relevansi model) |
 | **longitude** | Koordinat bujur tempat tinggal | Numerik | *Excluded* (tidak digunakan karena pertimbangan relevansi model) |
 | **Pin code** | Kode pos area pengiriman | Numerik | *Excluded* (kardinalitas lokasi relatif tinggi) |
-
-> **Penting:** `Family size`, `latitude`, `longitude`, dan `Pin code` tidak sebaiknya disebut sebagai *data leakage* tanpa bukti bahwa fitur tersebut mengandung informasi yang berasal dari target atau outcome masa depan. Dalam project ini, fitur-fitur tersebut diperlakukan sebagai fitur yang dikeluarkan berdasarkan keputusan analisis/relevansi.
 
 > **Pengecekan temporal:** `Feedback` digunakan sebagai fitur prediktor. Agar penggunaan fitur ini valid untuk prediksi churn, `Feedback` harus tersedia pada titik waktu yang sama atau sebelum waktu prediksi. Karena dataset yang digunakan berbasis survei, hubungan temporal tersebut perlu diperhatikan ketika menggeneralisasikan model ke data produksi.
 
@@ -273,24 +269,6 @@ Dengan **Random Forest + threshold Churn 0.56**, hasil pada holdout test set:
 | **Loyal F1-Score** | **89.8%** | Performa klasifikasi kelas Loyal. |
 | **ROC-AUC** | **0.834** | Kemampuan model membedakan kelas berdasarkan ranking skor/probabilitas. |
 | **Average Precision (Churn)** | **0.722** | Ringkasan performa precision-recall untuk kelas Churn. |
-
-### ⭐ Angka Utama Model untuk Presentasi
-
-Untuk slide PowerPoint, tiga metrik utama yang paling relevan dengan tujuan bisnis project ini adalah:
-
-| Metrik | Hasil |
-|---|---:|
-| **Churn Recall** | **76.5%** |
-| **Churn F1-Score** | **68.4%** |
-| **ROC-AUC** | **0.834** |
-
-**Ringkasan yang disarankan untuk PPT:**
-
-> **Random Forest — Holdout Test Set (n=78)**  
-> **76.5% Churn Recall · 68.4% Churn F1 · 0.834 ROC-AUC**  
-> *Threshold = 0.56*
-
-Churn Recall ditempatkan sebagai metrik utama karena tujuan model adalah menangkap sebanyak mungkin customer yang berisiko Churn untuk masuk daftar prioritas retensi.
 
 ### 5. Confusion Matrix
 
